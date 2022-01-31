@@ -1,10 +1,10 @@
 import React from "react";
 
 
-const UserPreview = ({ avatar , firstName , lastName , age , person, handleSelectingPerson }) => {
+const UserPreview = ({ avatar , firstName , lastName , age , person, location, handleSelectingPerson }) => {
     return (
         <div onClick={() => {handleSelectingPerson(person)}} className="comment">
-            <div className="avatar">
+            <div className="avatar" style={{}}>
                 <img alt="avatar" src={avatar} />
             </div>
             <div className="content">
@@ -12,8 +12,8 @@ const UserPreview = ({ avatar , firstName , lastName , age , person, handleSelec
                     {`${firstName} ${lastName}`}
                 </div>
                 <div className="metadata">
-                    <span className="age">
-                        {`Age: ${age}`}
+                    <span className="location">
+                        {`${location.city} | ${location.state}`}
                     </span>
                 </div>
                 
@@ -21,5 +21,6 @@ const UserPreview = ({ avatar , firstName , lastName , age , person, handleSelec
         </div>
     );
 };
+
 
 export default UserPreview;
