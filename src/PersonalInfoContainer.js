@@ -7,7 +7,7 @@ const userContainerLoop = (results, handleSelectingPerson) => {
   return (
     <div>
       {results.map((person, i) => {
-        console.log(person);
+        
         return (
           <ContactCard key={i}>
             <UserPreview
@@ -15,6 +15,7 @@ const userContainerLoop = (results, handleSelectingPerson) => {
               firstName={person.name.first}
               lastName={person.name.last}
               age={person.dob.age}
+              location={person.location}
               person={person}
               handleSelectingPerson={handleSelectingPerson}
             />
@@ -27,8 +28,6 @@ const userContainerLoop = (results, handleSelectingPerson) => {
 
 //Creates contact info containers and passes state
 const PersonalInfoContainer = ({ dataArray, handleSelectingPerson }) => {
-  console.log("here");
-  console.log(dataArray);
   return <div>{userContainerLoop(dataArray, handleSelectingPerson)}</div>;
 };
 

@@ -11,10 +11,11 @@ const Styles ={
         justifyContent: "start",
         overflowY: "scroll",
         scrollbarWidth: "none", 
-        backgroundColor: "#ececec",
+        
         minWidth: "300px", 
         maxWidth: "400px", 
         padding: "10px",
+        
     }
 };
 

@@ -5,10 +5,12 @@ import PersonalInfoContainer from "./PersonalInfoContainer";
 import Search from "./Search";
 import axios from "axios";
 import Modal from "react-modal";
+import DropDown from "./DropDown";
+
 
 const App = () => {
 
-
+//Gets data from API
   useEffect(() => {
     axios
       .get("https://randomuser.me/api/?results=50&nat=gb")
@@ -17,7 +19,8 @@ const App = () => {
       });
   }, []);
 
-  //State
+
+//State
 
   //API data storage
   const [popAPI, setPopAPI] = useState(null);
@@ -28,11 +31,19 @@ const App = () => {
     setSearchInput(event.target.value);
   };
 
+  //Opens modal depending on 
   const [selectedPerson, setSelectedPerson] = useState(null);
   const handleSelectingPerson = (person) => {
     setSelectedPerson(person);
     openModal(true);
   };
+
+  // //State for sort function
+  // const [sortBy , setSortBy] = useState(null);
+  // const handleSortBy = (sortByOption) => {
+  //   setSortBy(sortByOption.target.value);
+  // }
+
 
   //Filters persons based on search input
   const filteredData =
@@ -52,6 +63,48 @@ const App = () => {
       }
     });
 
+  
+
+
+
+  //Sort state
+  
+  const [valueDropDown, setValueDropDown] = useState(null);
+  
+    
+  const items = [
+    { label: "Default", value: null },
+    { label: "First Name", value: "first" },
+    { label: "Last Name", value: "last" }
+  ];
+
+  //Sorts by last name
+  const sortByLastName = () => {
+    const sorted = [...popAPI];
+    sorted.sort(compare);
+    setPopAPI(sorted);
+  };
+
+  //Sorts by either first or last name
+  const sortByName = () => {
+    console.log(valueDropDown)
+    const sorted = [...popAPI];
+    sorted.sort(firstOrLastCompare);
+    setPopAPI(sorted);
+  };
+
+  const firstOrLastCompare = (a, b) => {
+    console.log(valueDropDown)
+    if (a.name[valueDropDown] < b.name[valueDropDown]) {
+      return -1;
+    }
+    if (a.name[valueDropDown] > b.name[valueDropDown]) {
+      return 1;
+    }
+    return 0;
+  };
+
+
   const compare = (a, b) => {
     if (a.name.last < b.name.last) {
       return -1;
@@ -60,13 +113,6 @@ const App = () => {
       return 1;
     }
     return 0;
-  };
-
-  //Sorts by last name
-  const sortByLastName = () => {
-    const sorted = [...popAPI];
-    sorted.sort(compare);
-    setPopAPI(sorted);
   };
 
   // Modal Start
@@ -88,89 +134,11 @@ const App = () => {
     setIsOpen(false);
   }
 
-  //Custom Styles
-  const Styles = {
-    pageStyling: {
-      backgroundColor: "e7e7e7",
-      width: "400px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      height: "100vh",
-      borderRadius: "20px",
-      color: "black",
-    },
 
-    headerContainer: {
-      display: "flex",
-      justifyContent: "start",
-      height: "120px",
-      width: "100%",
-      backgroundColor: "#262626",
-      paddingTop: "10px",
-      paddingLeft: "20px",
-    },
 
-    flexPosition2: {
-      order: "2",
-    },
+  
 
-    personInfoContainer: {
-      transform: "translateY(-50px)",
-      display: "grid",
-      grid: "15px / 1fr 3fr",
-    },
 
-    contactPane: {
-      order: "2",
-      maxWidth: "400px",
-      backgroundColor: "red",
-    },
-
-    contactImagePane: {
-      maxWidth: "400px",
-      flexDirection: "column",
-    },
-
-    contactImage: {
-      minWidth: "auto",
-      height: "350px",
-      objectFit: "cover",
-      transform: "translateY(-20px) translateX(-20px)",
-    },
-
-    contactName: {
-      transform: "translateY(-90px)",
-      color: "white",
-      marginLeft: "15px",
-    },
-
-    heading2: {
-      color: "red",
-      fontSize: "14px",
-    },
-
-    heading3: {
-      color: "#0d0d0d",
-      fontSize: "12px",
-    },
-
-    heading3a: {
-      transform: "translateY(-24px)",
-      color: "#0d0d0d",
-      fontSize: "12px",
-    },
-
-    searchPosition: {
-      marignTop: "100px",
-    },
-
-    modifierContainer: {
-      backgroundColor: "#ededed",
-      height: "160px",
-      width: "100%",
-    },
-  };
 
   return popAPI ? (
     <div style={Styles.pageStyling}>
@@ -181,7 +149,7 @@ const App = () => {
           focusable="false"
           data-prefix="fas"
           data-icon="address-book"
-          class="svg-inline--fa fa-address-book"
+          className="svg-inline--fa fa-address-book"
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
@@ -202,19 +170,22 @@ const App = () => {
         </h1>
       </div>
       <div style={Styles.modifierContainer}>
-        <h3
-          style={{
-            marginTop: "20px",
-            marginLeft: "20px",
-            color: "#0d0d0d",
-            fontSize: "15px",
-          }}
-        >
-          Search name/location
+        <h3 style={Styles.headerTitles}> 
+        Search name/location
         </h3>
-
-        <Search searchInput={searchInput} handleChange={handleChange} />
-
+        
+          <Search searchInput={searchInput} handleChange={handleChange} />
+          
+          <h3 style={Styles.headerTitles}> 
+        Sort by
+        </h3>
+       
+          <DropDown items={items}  onChange={e => {
+            
+            console.log(e)
+            setValueDropDown(e.currentTarget.value)
+            }} />
+     
         <button
           style={{
             marginTop: "20px",
@@ -223,15 +194,13 @@ const App = () => {
             color: "#0d0d0d",
             fontSize: "15px",
           }}
-          onClick={sortByLastName}
+          onClick={sortByName}
         >
-          Sort Alphabetically
+          Sort
         </button>
-      </div>
 
-      <ScrollDiv style={Styles.flexPosition2}>
-        <div style={Styles.contactPane}>
-          <Modal
+      </div>
+      <Modal
             isOpen={modalIsOpen}
             onAfterOpen={afterOpenModal}
             onRequestClose={closeModal}
@@ -241,9 +210,10 @@ const App = () => {
                 borderRadius: "30px",
                 maxWidth: "320px",
                 overflowX: "hidden",
+                
               },
             }}
-            contentLabel="Example Modal"
+            contentLabel="Contact Modal"
           >
             {selectedPerson && (
               <div>
@@ -277,6 +247,9 @@ const App = () => {
               </div>
             )}
           </Modal>
+      <ScrollDiv style={Styles.flexPosition2}>
+        <div style={Styles.contactPane}>
+          
         </div>
         {/* Modal End */}
         <div className="ui container comments" style={Styles.pageStyling}>
@@ -291,5 +264,103 @@ const App = () => {
     <div>Loading</div>
   );
 };
+
+
+//Custom Styles
+const Styles = {
+  pageStyling: {
+    width: "400px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100vh",
+    borderRadius: "20px",
+    color: "black",
+    
+  },
+
+  headerContainer: {
+    display: "flex",
+    justifyContent: "start",
+    height: "100px",
+    width: "100%",
+    backgroundColor: "#262626",
+    paddingTop: "10px",
+    paddingLeft: "20px",
+   
+  },
+
+  headerTitles: {
+    marginTop: "20px",
+    marginLeft: "20px",
+    color: "#0d0d0d",
+    fontSize: "15px",
+  },
+
+  flexPosition2: {
+    order: "2",
+  },
+
+  personInfoContainer: {
+    transform: "translateY(-50px)",
+    display: "grid",
+    grid: "15px / 1fr 3fr",
+  },
+
+  contactPane: {
+    order: "2",
+    maxWidth: "400px",
+    backgroundColor: "red",
+  },
+
+  contactImagePane: {
+    maxWidth: "400px",
+    flexDirection: "column",
+  },
+
+  contactImage: {
+    minWidth: "auto",
+    height: "350px",
+    objectFit: "cover",
+    transform: "translateY(-20px) translateX(-20px)",
+  },
+
+  contactName: {
+    transform: "translateY(-90px)",
+    color: "white",
+    marginLeft: "15px",
+  },
+
+  heading2: {
+    color: "#e26087",
+    fontSize: "14px",
+  },
+
+  heading3: {
+    color: "#0d0d0d",
+    fontSize: "12px",
+  },
+
+  heading3a: {
+    transform: "translateY(-24px)",
+    color: "#0d0d0d",
+    fontSize: "12px",
+  },
+
+  searchPosition: {
+    marignTop: "100px",
+  },
+
+  modifierContainer: {
+    backgroundColor: "#ededed",
+    height: "250px",
+    width: "100%",
+    boxShadow: "0px 10px 5px rgb(220 220 220)",
+    
+  },
+};
+
+
+
 
 ReactDom.render(<App />, document.querySelector("#root"));

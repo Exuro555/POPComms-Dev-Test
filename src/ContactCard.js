@@ -7,12 +7,13 @@ const ContactCard = (props) => {
 const Styles = {
   contactContainer: {
     border: "1px solid #ededed",
-    width: "300px",
+    width: "330px",
     borderRadius: "20px",
     color: "red",
-    backgroundColor: "#efefef",
-    padding: "10px",
-    marginTop: "20px",
+    backgroundColor: "#fdfdfd",
+    padding: "20px",
+    marginBottom: "20px",
+    boxShadow:  "8px 8px 24px #bebebe, -8px -8px 24px #ffffff"
   },
 };
 
