@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 
 
+//Performs search on input/value change
 const Search = ({ searchInput , handleChange }) => {
-
-    
-
     return (
         <div >
             <input style={Styles.inputBox} value={searchInput} onChange={handleChange} />
