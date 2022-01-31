@@ -7,8 +7,7 @@ import axios from "axios";
 import Modal from "react-modal";
 
 const App = () => {
-  //  const popCommsData = FetchAPI("https://randomuser.me/api/?results=50&nat=gb");
-  // // console.log(popCommsData)
+
 
   useEffect(() => {
     axios
