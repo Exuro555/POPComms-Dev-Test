@@ -6,11 +6,10 @@ import Search from "./Search";
 import axios from "axios";
 import Modal from "react-modal";
 import DropDown from "./DropDown";
-
+import SelectedPersonInfo from "./SelectedPersonInfo";
 
 const App = () => {
-
-//Gets data from API
+  //Gets data from API
   useEffect(() => {
     axios
       .get("https://randomuser.me/api/?results=50&nat=gb")
@@ -19,8 +18,7 @@ const App = () => {
       });
   }, []);
 
-
-//State
+  //State
 
   //API data storage
   const [popAPI, setPopAPI] = useState(null);
@@ -31,19 +29,12 @@ const App = () => {
     setSearchInput(event.target.value);
   };
 
-  //Opens modal depending on 
+  //Opens modal depending on
   const [selectedPerson, setSelectedPerson] = useState(null);
   const handleSelectingPerson = (person) => {
     setSelectedPerson(person);
     openModal(true);
   };
-
-  // //State for sort function
-  // const [sortBy , setSortBy] = useState(null);
-  // const handleSortBy = (sortByOption) => {
-  //   setSortBy(sortByOption.target.value);
-  // }
-
 
   //Filters persons based on search input
   const filteredData =
@@ -63,38 +54,27 @@ const App = () => {
       }
     });
 
-  
-
-
-
   //Sort state
-  
+
   const [valueDropDown, setValueDropDown] = useState(null);
-  
-    
+
   const items = [
     { label: "Default", value: null },
     { label: "First Name", value: "first" },
-    { label: "Last Name", value: "last" }
+    { label: "Last Name", value: "last" },
   ];
 
-  //Sorts by last name
-  const sortByLastName = () => {
-    const sorted = [...popAPI];
-    sorted.sort(compare);
-    setPopAPI(sorted);
-  };
 
   //Sorts by either first or last name
   const sortByName = () => {
-    console.log(valueDropDown)
+    console.log(valueDropDown);
     const sorted = [...popAPI];
     sorted.sort(firstOrLastCompare);
     setPopAPI(sorted);
   };
 
   const firstOrLastCompare = (a, b) => {
-    console.log(valueDropDown)
+    console.log(valueDropDown);
     if (a.name[valueDropDown] < b.name[valueDropDown]) {
       return -1;
     }
@@ -104,18 +84,7 @@ const App = () => {
     return 0;
   };
 
-
-  const compare = (a, b) => {
-    if (a.name.last < b.name.last) {
-      return -1;
-    }
-    if (a.name.last > b.name.last) {
-      return 1;
-    }
-    return 0;
-  };
-
-  // Modal Start
+  // Modal popout
 
   Modal.setAppElement("#root");
 
@@ -133,12 +102,6 @@ const App = () => {
   function closeModal() {
     setIsOpen(false);
   }
-
-
-
-  
-
-
 
   return popAPI ? (
     <div style={Styles.pageStyling}>
@@ -170,22 +133,20 @@ const App = () => {
         </h1>
       </div>
       <div style={Styles.modifierContainer}>
-        <h3 style={Styles.headerTitles}> 
-        Search name/location
-        </h3>
-        
-          <Search searchInput={searchInput} handleChange={handleChange} />
-          
-          <h3 style={Styles.headerTitles}> 
-        Sort by
-        </h3>
-       
-          <DropDown items={items}  onChange={e => {
-            
-            console.log(e)
-            setValueDropDown(e.currentTarget.value)
-            }} />
-     
+        <h3 style={Styles.headerTitles}>Search name/location</h3>
+
+        <Search searchInput={searchInput} handleChange={handleChange} />
+
+        <h3 style={Styles.headerTitles}>Sort by</h3>
+
+        <DropDown
+          items={items}
+          onChange={(e) => {
+            console.log(e);
+            setValueDropDown(e.currentTarget.value);
+          }}
+        />
+
         <button
           style={{
             marginTop: "20px",
@@ -198,59 +159,28 @@ const App = () => {
         >
           Sort
         </button>
-
       </div>
+
       <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModal}
-            style={{
-              content: {
-                color: "lightsteelblue",
-                borderRadius: "30px",
-                maxWidth: "320px",
-                overflowX: "hidden",
-                
-              },
-            }}
-            contentLabel="Contact Modal"
-          >
-            {selectedPerson && (
-              <div>
-                <div style={Styles.contactImage}>
-                  <img
-                    src={selectedPerson.picture.large}
-                    style={Styles.contactImage}
-                  />
-                </div>
-                <div style={Styles.contactName}>
-                  <h1>{`${selectedPerson.name.first} ${selectedPerson.name.last}`}</h1>
-                </div>
-                <div style={Styles.personInfoContainer}>
-                  <h2 style={Styles.heading2}>Age</h2>
-                  <h3 style={Styles.heading3a}>{selectedPerson.dob.age}</h3>
-                  <h2 style={Styles.heading2}>Email</h2>
-                  <h3 style={Styles.heading3}>{selectedPerson.email}</h3>
-                  <h2 style={Styles.heading2}>Mobile</h2>
-                  <h3 style={Styles.heading3}>{selectedPerson.cell}</h3>
-                  <h2 style={Styles.heading2}>Phone</h2>
-                  <h3 style={Styles.heading3}>{selectedPerson.phone}</h3>
-                  <h2 style={Styles.heading2}>Address</h2>
-                  <h3
-                    style={Styles.heading3}
-                  >{`${selectedPerson.location.street.number} ${selectedPerson.location.street.name}, 
-                        ${selectedPerson.location.city}, 
-                        ${selectedPerson.location.state}, 
-                        ${selectedPerson.location.postcode}
-                        `}</h3>
-                </div>
-              </div>
-            )}
-          </Modal>
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={{
+          content: {
+            color: "lightsteelblue",
+            borderRadius: "30px",
+            maxWidth: "320px",
+            overflowX: "hidden",
+            
+          },
+        }}
+        contentLabel="Contact Modal"
+      > {/*Error here so forced to only load <SelectedPerson when sele  */}
+        {selectedPerson && <SelectedPersonInfo selectedPerson={selectedPerson} />}
+      </Modal>
+
       <ScrollDiv style={Styles.flexPosition2}>
-        <div style={Styles.contactPane}>
-          
-        </div>
+        <div style={Styles.contactPane}></div>
         {/* Modal End */}
         <div className="ui container comments" style={Styles.pageStyling}>
           <PersonalInfoContainer
@@ -265,7 +195,6 @@ const App = () => {
   );
 };
 
-
 //Custom Styles
 const Styles = {
   pageStyling: {
@@ -276,7 +205,6 @@ const Styles = {
     height: "100vh",
     borderRadius: "20px",
     color: "black",
-    
   },
 
   headerContainer: {
@@ -287,7 +215,6 @@ const Styles = {
     backgroundColor: "#262626",
     paddingTop: "10px",
     paddingLeft: "20px",
-   
   },
 
   headerTitles: {
@@ -301,50 +228,10 @@ const Styles = {
     order: "2",
   },
 
-  personInfoContainer: {
-    transform: "translateY(-50px)",
-    display: "grid",
-    grid: "15px / 1fr 3fr",
-  },
-
   contactPane: {
     order: "2",
     maxWidth: "400px",
     backgroundColor: "red",
-  },
-
-  contactImagePane: {
-    maxWidth: "400px",
-    flexDirection: "column",
-  },
-
-  contactImage: {
-    minWidth: "auto",
-    height: "350px",
-    objectFit: "cover",
-    transform: "translateY(-20px) translateX(-20px)",
-  },
-
-  contactName: {
-    transform: "translateY(-90px)",
-    color: "white",
-    marginLeft: "15px",
-  },
-
-  heading2: {
-    color: "#e26087",
-    fontSize: "14px",
-  },
-
-  heading3: {
-    color: "#0d0d0d",
-    fontSize: "12px",
-  },
-
-  heading3a: {
-    transform: "translateY(-24px)",
-    color: "#0d0d0d",
-    fontSize: "12px",
   },
 
   searchPosition: {
@@ -356,11 +243,7 @@ const Styles = {
     height: "250px",
     width: "100%",
     boxShadow: "0px 10px 5px rgb(220 220 220)",
-    
   },
 };
-
-
-
 
 ReactDom.render(<App />, document.querySelector("#root"));
