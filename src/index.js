@@ -146,7 +146,6 @@ const App = () => {
             setValueDropDown(e.currentTarget.value);
           }}
         />
-
         <button
           style={{
             marginTop: "20px",
@@ -171,7 +170,6 @@ const App = () => {
             borderRadius: "30px",
             maxWidth: "320px",
             overflowX: "hidden",
-            
           },
         }}
         contentLabel="Contact Modal"
@@ -189,6 +187,7 @@ const App = () => {
           />
         </div>
       </ScrollDiv>
+
     </div>
   ) : (
     <div>Loading</div>
