@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Loader from "./Loader";
 
 const coverVariants = {
     exit: {
@@ -20,6 +21,7 @@ const SplashScreen = () => {
                 variants={coverVariants}
                 exit="exit"
             >
+                <Loader/>
             </motion.div>
     )
 }

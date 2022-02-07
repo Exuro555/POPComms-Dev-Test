@@ -9,6 +9,7 @@ import DropDown from "./DropDown";
 import SelectedPersonInfo from "./SelectedPersonInfo";
 import SplashScreen from "./SplashScreen";
 import { motion, AnimatePresence } from "framer-motion";
+import Loader from "./Loader";
 
 
 const App = () => {
@@ -239,7 +240,6 @@ useEffect(() => {
     </div>
   ) : (
       <SplashScreen key="2"/>
-    
   )}
   </AnimatePresence>
   );
