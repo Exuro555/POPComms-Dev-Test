@@ -18,6 +18,15 @@ const App = () => {
       });
   }, []);
 
+
+  //Animates loading screen
+  const [ loadingScreen, setLoadingScreen ] = useState(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadingScreen(true)
+    }, 3000)
+  })
+
   //State
 
   //API data storage
@@ -103,7 +112,7 @@ const App = () => {
     setIsOpen(false);
   }
 
-  return popAPI ? (
+  return popAPI && loadingScreen ? (
     <div style={Styles.pageStyling}>
       <div style={Styles.headerContainer}>
         <svg
