@@ -17,35 +17,39 @@ const userContainerLoop = (results, handleSelectingPerson) => {
   };
   
 
-
+  
   return (
-    <ul style={Styles.ul} >
-      {results.map((person, i) => {
-        
-        return (
-          <motion.li 
+    <motion.div 
+      
+    >
+      <ul style={Styles.ul} >
+        {results.map((person, i) => {
           
-          style={Styles.li}
-          variants={itemVariants}
-          initial="initial"
-          animate="animate"
-          transition={{ duration: 0.37, delay: i * 0.11 }}
-          >
-            <ContactCard key={i}            >
-              <UserPreview
-                avatar={person.picture.thumbnail}
-                firstName={person.name.first}
-                lastName={person.name.last}
-                age={person.dob.age}
-                location={person.location}
-                person={person}
-                handleSelectingPerson={handleSelectingPerson}
-              />
-            </ContactCard>
-          </motion.li>
-        );
-      })}
-    </ul>
+          return (
+            <motion.li 
+            
+            style={Styles.li}
+            variants={itemVariants}
+            initial="initial"
+            animate="animate"
+            transition={{ duration: 0.37, delay: i * 0.11 }}
+            >
+              <ContactCard key={i}            >
+                <UserPreview
+                  avatar={person.picture.thumbnail}
+                  firstName={person.name.first}
+                  lastName={person.name.last}
+                  age={person.dob.age}
+                  location={person.location}
+                  person={person}
+                  handleSelectingPerson={handleSelectingPerson}
+                />
+              </ContactCard>
+            </motion.li>
+          );
+        })}
+      </ul>
+    </motion.div>
   );
 };
 

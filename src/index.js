@@ -7,6 +7,9 @@ import axios from "axios";
 import Modal from "react-modal";
 import DropDown from "./DropDown";
 import SelectedPersonInfo from "./SelectedPersonInfo";
+import SplashScreen from "./SplashScreen";
+import { motion, AnimatePresence } from "framer-motion";
+
 
 const App = () => {
   //Gets data from API
@@ -112,11 +115,39 @@ const App = () => {
     setIsOpen(false);
   }
 
-  return popAPI && loadingScreen ? (
-    <div style={Styles.pageStyling}>
-      <div style={Styles.headerContainer}>
-        <svg
-          style={{ height: 40, color: "#ededed" }}
+//Animation Variants
+
+const containerVariants = {
+  hidden: {
+    opacity: 0
+  },
+  visable: {
+    opacity: 1,
+    transition: {
+      delay: 1,
+      duration: 1
+    }
+  }
+}
+
+const [scrollLoadDelay, setScrollLoadDelay] = useState(false)
+
+useEffect(() => {
+  setTimeout(() => {
+    setScrollLoadDelay(true)
+  }, 5000)
+})
+
+
+  return (<AnimatePresence >
+    {popAPI && loadingScreen ? (
+      
+    <div 
+    style={Styles.pageStyling}
+      >
+        <div style={Styles.headerContainer}>
+          <svg
+          style={{ height: 40, color: "#ededed", marginTop: "21px" }}
           aria-hidden="true"
           focusable="false"
           data-prefix="fas"
@@ -130,76 +161,87 @@ const App = () => {
             fill="currentColor"
             d="M384 0H96C60.65 0 32 28.65 32 64v384c0 35.35 28.65 64 64 64h288c35.35 0 64-28.65 64-64V64C448 28.65 419.3 0 384 0zM240 128c35.35 0 64 28.65 64 64s-28.65 64-64 64c-35.34 0-64-28.65-64-64S204.7 128 240 128zM336 384h-192C135.2 384 128 376.8 128 368C128 323.8 163.8 288 208 288h64c44.18 0 80 35.82 80 80C352 376.8 344.8 384 336 384zM496 64H480v96h16C504.8 160 512 152.8 512 144v-64C512 71.16 504.8 64 496 64zM496 192H480v96h16C504.8 288 512 280.8 512 272v-64C512 199.2 504.8 192 496 192zM496 320H480v96h16c8.836 0 16-7.164 16-16v-64C512 327.2 504.8 320 496 320z"
           ></path>
-        </svg>
+          </svg>
         <h1
           style={{
             color: "#e7e7e7",
             marginLeft: "20px",
-            transform: "translateY(-20px)",
+            
           }}
         >
           Contacts
         </h1>
       </div>
-      <div style={Styles.modifierContainer}>
-        <h3 style={Styles.headerTitles}>Search name/location</h3>
-
-        <Search searchInput={searchInput} handleChange={handleChange} />
-
-        <h3 style={Styles.headerTitles}>Sort by</h3>
-
-        <DropDown
-          items={items}
-          onChange={(e) => {
-            console.log(e);
-            setValueDropDown(e.currentTarget.value);
-          }}
-        />
-        <button
-          style={{
-            marginTop: "20px",
-            marginLeft: "20px",
-            marginBottom: "20px",
-            color: "#0d0d0d",
-            fontSize: "15px",
-          }}
-          onClick={sortByName}
+        <motion.div
+          key="1" 
+          variants={containerVariants}
+          initial="hidden"
+          animate="visable"
         >
-          Sort
-        </button>
-      </div>
+          <div style={Styles.modifierContainer}>
+            <h3 style={Styles.headerTitles}>Search name/location</h3>
 
-      <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={{
-          content: {
-            color: "lightsteelblue",
-            borderRadius: "30px",
-            maxWidth: "320px",
-            overflowX: "hidden",
-          },
-        }}
-        contentLabel="Contact Modal"
-      > {/*Error here so forced to only load <SelectedPerson when sele  */}
-        {selectedPerson && <SelectedPersonInfo selectedPerson={selectedPerson} />}
-      </Modal>
+            <Search searchInput={searchInput} handleChange={handleChange} />
 
-      <ScrollDiv style={Styles.flexPosition2}>
-        <div style={Styles.contactPane}></div>
-        {/* Modal End */}
-        <div className="ui container comments" style={Styles.pageStyling}>
-          <PersonalInfoContainer
-            dataArray={filteredData}
-            handleSelectingPerson={handleSelectingPerson}
-          />
-        </div>
-      </ScrollDiv>
+            <h3 style={Styles.headerTitles}>Sort by</h3>
 
+            <DropDown
+              items={items}
+              onChange={(e) => {
+                console.log(e);
+                setValueDropDown(e.currentTarget.value);
+              }}
+            />
+            <button
+              style={{
+                marginTop: "20px",
+                marginLeft: "20px",
+                marginBottom: "20px",
+                color: "#0d0d0d",
+                fontSize: "15px",
+              }}
+              onClick={sortByName}
+            >
+              Sort
+            </button>
+          </div>
+
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            style={{
+              content: {
+                color: "lightsteelblue",
+                borderRadius: "30px",
+                maxWidth: "320px",
+                overflowX: "hidden",
+              },
+            }}
+            contentLabel="Contact Modal"
+          > {/*Error here so forced to only load <SelectedPerson when sele  */}
+            {selectedPerson && <SelectedPersonInfo selectedPerson={selectedPerson} />}
+          </Modal>
+
+          {scrollLoadDelay ? (<ScrollDiv style={Styles.flexPosition2}>
+            <div style={Styles.contactPane}></div>
+            {/* Modal End */}
+            <div className="ui container comments" style={Styles.pageStyling}>
+              <PersonalInfoContainer
+                dataArray={filteredData}
+                handleSelectingPerson={handleSelectingPerson}
+              />
+            </div>
+          </ScrollDiv>) : (
+            <div></div>
+          )}
+        </motion.div>
     </div>
   ) : (
-    <div>Loading</div>
+      <SplashScreen key="2"/>
+    
+  )}
+  </AnimatePresence>
   );
 };
 
@@ -214,7 +256,6 @@ const Styles = {
     borderRadius: "20px",
     color: "black",
   },
-
   headerContainer: {
     display: "flex",
     justifyContent: "start",
@@ -248,8 +289,9 @@ const Styles = {
 
   modifierContainer: {
     backgroundColor: "#ededed",
-    height: "250px",
+    height: "230px",
     width: "100%",
+    paddingTop: "8px",
     boxShadow: "0px 10px 5px rgb(220 220 220)",
   },
 };
