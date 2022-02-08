@@ -23,6 +23,7 @@ const SplashScreen = () => {
             >
                 <Loader/>
             </motion.div>
+            
     )
 }
 
