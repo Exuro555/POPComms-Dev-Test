@@ -15,7 +15,7 @@ const Styles ={
         minWidth: "300px", 
         maxWidth: "400px", 
         padding: "10px",
-        
+        zIndex: 1
     }
 };
 
