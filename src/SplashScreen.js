@@ -4,7 +4,7 @@ import Loader from "./Loader";
 
 const coverVariants = {
     exit: {
-        y: "-89vh",
+        y: "-100vh",
         transition: { duration: 0.8 },
         ease: "easeOut"
     }
@@ -29,7 +29,7 @@ const SplashScreen = () => {
 
 const Styles = {
     cover: {
-        height: "100vh",
+        height: "110vh",
         width: "400px",
         backgroundColor: "#262626"
     }

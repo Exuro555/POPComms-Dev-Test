@@ -20,11 +20,7 @@ const Header = () => {
             ></path>
             </svg>
             <h1
-            style={{
-                color: "#e7e7e7",
-                marginLeft: "20px",
-                
-            }}
+            style={Styles.p}
             >
             Contacts
             </h1>
@@ -36,11 +32,16 @@ const Styles = {
     headerContainer: {
         display: "flex",
         justifyContent: "start",
-        height: "100px",
+        height: "10vh",
         width: "100%",
         backgroundColor: "#262626",
         paddingTop: "10px",
         paddingLeft: "20px",
+        paddingBottom:"10px"
+      },
+      p: {
+        color: "#e7e7e7",
+        marginLeft: "20px"
       }
 }
 

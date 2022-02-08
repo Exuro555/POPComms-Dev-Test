@@ -27,7 +27,7 @@ const userContainerLoop = (results, handleSelectingPerson) => {
           
           return (
             <motion.li 
-            
+            key={i}
             style={Styles.li}
             variants={itemVariants}
             initial="initial"
