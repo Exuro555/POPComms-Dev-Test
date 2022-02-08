@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import ReactDom from "react-dom";
 import ScrollDiv from "./ScrollDiv";
 import PersonalInfoContainer from "./PersonalInfoContainer";
-import Search from "./Search";
 import axios from "axios";
 import Modal from "react-modal";
-import DropDown from "./DropDown";
 import SelectedPersonInfo from "./SelectedPersonInfo";
 import SplashScreen from "./SplashScreen";
 import { motion, AnimatePresence } from "framer-motion";
-import Loader from "./Loader";
 import Header from "./Header";
 import ModifierContainer from "./ModifierContainer";
 
@@ -103,7 +100,7 @@ const App = () => {
 
   Modal.setAppElement("#root");
 
-  let subtitle;
+
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
