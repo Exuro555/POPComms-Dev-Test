@@ -13,11 +13,12 @@ const backdropVariants = {
 
 const modal = {
   hidden: {
-    y: "-100vh",
+    scale: 0,
     opacity: 0,
   },
   visable: {
-    y: "10vh",
+    scale: 1,
+    y: "5vh",
     opacity: 1,
     transition: { delay: 0.5, duration: 0.7 },
   },
