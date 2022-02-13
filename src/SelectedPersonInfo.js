@@ -4,7 +4,11 @@ const SelectedPersonInfo = ({ selectedPerson, closeModal }) => {
   return (
     <div>
       <div>
-        <img alt="Avatar" src={selectedPerson.picture.large} style={Styles.contactImage} />
+        <img
+          alt="Avatar"
+          src={selectedPerson.picture.large}
+          style={Styles.contactImage}
+        />
       </div>
       <div style={Styles.contactName}>
         <h1>{`${selectedPerson.name.first} ${selectedPerson.name.last}`}</h1>
@@ -27,13 +31,11 @@ const SelectedPersonInfo = ({ selectedPerson, closeModal }) => {
                         ${selectedPerson.location.postcode}
                         `}</h3>
       </div>
-      
     </div>
   );
 };
 
 const Styles = {
-
   contactName: {
     transform: "translateY(-50px) translateX(-50px)",
     color: "white",

@@ -13,7 +13,7 @@ const Styles = {
     backgroundColor: "#fdfdfd",
     padding: "20px",
     marginBottom: "20px",
-    boxShadow:  "8px 8px 24px #bebebe, -8px -8px 24px #ffffff"
+    boxShadow: "8px 8px 24px #bebebe, -8px -8px 24px #ffffff",
   },
 };
 
