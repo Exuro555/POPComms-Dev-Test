@@ -95,8 +95,6 @@ const App = () => {
 
   // Modal popout
 
-
-
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -143,7 +141,7 @@ const App = () => {
             animate="visable"
           >
             <ModifierContainer
-              style={{zIndex: 9}}
+              style={{ zIndex: 9 }}
               searchInput={searchInput}
               handleChange={handleChange}
               items={items}
@@ -203,6 +201,6 @@ const Styles = {
     order: "2",
     maxWidth: "400px",
     backgroundColor: "red",
-  }
+  },
 };
 ReactDom.render(<App />, document.querySelector("#root"));
